@@ -1,3 +1,17 @@
 {
-  "groups": []
+  "groups": [
+    {
+      "title": "Another Group",
+      "description": "I need to add a text box feature to this web app",
+      "id": 2,
+      "goals": "Goals Text"
+    },
+    {
+      "title": "Test",
+      "description": "Test",
+      "dailyGoal": "What",
+      "id": 3,
+      "goals": "testtesttest"
+    }
+  ]
 }

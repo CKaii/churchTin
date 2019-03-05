@@ -32,8 +32,9 @@ class GroupForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-        <Field name="title" component={this.renderInput} label="Enter Title" />
-        <Field name="description" component={this.renderInput} label="Enter Description"/>
+        <Field name="title" component={this.renderInput} label="Enter Title:" />
+        <Field name="description" component={this.renderInput} label="Enter Description:"/>
+        <Field name="goals" component={this.renderInput} label="Enter Daily Goal(s):" />
         <button className="ui button primary">Submit</button>
         <Link to='/' className='ui button'>Cancel</Link>
       </form>
@@ -49,6 +50,9 @@ const validate = (formValues) => {
   }
   if(!formValues.description) {
     errors.description = 'You must enter a description'
+  }
+  if(!formValues.goals) {
+    errors.goals = 'You must enter a goal'
   }
   return errors;
 }

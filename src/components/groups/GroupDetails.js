@@ -1,39 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchDetail } from '../../actions'
 
-const GroupDetails = () => {
-  return (
-    <div>
-      <div className="ui containter">
-        <div className="ui grid centered">
-          <div className="ui row">
-            <div className="eight wide column">
-              <div className="ui form">
-                <div className="field">
-                  <label>Group Name</label>
-                  <input type="text" />
-                </div>
-                <div className="field">
-                  <label>Daily Goal</label>
-                  <input type="text" />
-                </div>
-                <div class="field">
-                  <label>Group Details</label>
-                  <textarea></textarea>
-                </div>
-                <div class="field">
-                  <label>Goal response</label>
-                  <textarea></textarea>
-                </div>
-                <div>
-                  <button class="ui right floated primary basic button">Submit</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+class GroupDetails extends React.Component {
+  componentDidMount() {
+    this.props.fetchDetail(this.props.match.params.id);
+  }
+
+  render() {
+    if (!this.props.group) {
+      return <div>Loading...</div>
+    }
+    return (
+      <div>
+        <h1>{this.props.group.title}</h1>
+        <h3>{this.props.group.description}</h3>
+        <h5>{this.props.group.goals}</h5>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default GroupDetails;
+const mapStateToProps = (state, ownProps) => {
+  return { group: state.groups[ownProps.match.params.id]}
+}
+
+export default connect(mapStateToProps, { fetchDetail })(GroupDetails);

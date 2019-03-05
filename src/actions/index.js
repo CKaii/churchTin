@@ -1,13 +1,13 @@
 import {
   SIGN_IN,
   SIGN_OUT,
-  CREATE_GROUP,
+  GROUP_CREATE,
   DELETE_GROUP,
   FETCH_DETAILS,
   FETCH_DETAIL,
   EDIT_GROUP} from './types'
-import history from '../history'
-import groups from '../apis/groups'
+import history from '../history';
+import groups from '../apis/groups';
 
 export const signIn = () => {
   return {
@@ -21,12 +21,12 @@ export const signOut = () => {
   };
 }
 
-export const createGroup = (formValues) => async (dispatch, getState) =>{
+export const groupCreate = (formValues) => async (dispatch, getState) => {
   const { userId } = getState().auth;
   const response = await groups.post('/groups', { ...formValues, userId });
 
   dispatch({
-    type: CREATE_GROUP,
+    type: GROUP_CREATE,
     payload: response.data
   })
 
@@ -46,13 +46,15 @@ export const fetchDetail = (id) => async dispatch => {
 }
 
 export const editGroup = (id, formValues) => async dispatch => {
-  const response = await groups.put(`/groups/${id}`);
+  const response = await groups.patch(`/groups/${id}`, formValues);
 
   dispatch({type: EDIT_GROUP, payload: response.data })
+  history.push('/')
 }
 
 export const deleteGroup = (id) => async dispatch => {
   await groups.delete(`/groups/${id}`);
 
   dispatch({ type: DELETE_GROUP, payload: id})
+  history.push('/')
 }

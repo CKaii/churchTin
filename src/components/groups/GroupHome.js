@@ -5,7 +5,7 @@ import { fetchDetails } from '../../actions';
 
 class GroupHome extends React.Component {
   componentDidMount() {
-    this.props.fetchGroups();
+    this.props.fetchDetails();
   }
 
   renderAdmin(group) {
@@ -28,9 +28,11 @@ class GroupHome extends React.Component {
     return(
       <div className="item" key={group.id}>
       {this.renderAdmin(group)}
-      <i className="large middle aligned icon camera" />
+      <i className="large middle aligned icon coffee" />
         <div className="content">
-          {group.title}
+          <Link to ={`/groups/${group.id}`} className='header'>
+            {group.title}
+          </Link>
           <div className="description">{group.description}</div>
         </div>
       </div>
@@ -42,7 +44,7 @@ class GroupHome extends React.Component {
     if (this.props.isSignedIn) {
       return (
         <div style={{textAlign: 'right'}}>
-          <Link to="/groups/new" className="ui button primary">
+          <Link to="/groups/create" className="ui button primary">
             Create Group
           </Link>
         </div>
@@ -64,8 +66,8 @@ class GroupHome extends React.Component {
   }
 
   const mapStateToProps = (state) => {
-  return {
-     streams: Object.values(state.groups),
+    return {
+     groups: Object.values(state.groups),
      currentUserId: state.auth.userId,
      isSignedIn: state.auth.isSignedIn
     }
